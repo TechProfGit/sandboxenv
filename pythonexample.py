@@ -1,3 +1,1 @@
-test git
-
-test2 
+print("Welcome to Python world")
