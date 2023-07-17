@@ -20,3 +20,41 @@ Git.cloneRepository.setURI(gitUrl).setDirectory(destinationPath).call()
 val fileToDownload = "path/to/file"
 val filePath = "/mnt/<mount-point>/<file-name>"
 Git.cloneRepository.setURI(gitUrl).call().getRepository.copyTo(filePath, fileToDownload)
+// ===========================================
+
+
+import requests
+import zipfile
+
+
+repo_owner = "<github-owner>"
+repo_name = "<github-repo>"
+branch_name = "<github-branch>"
+client_id = "<aad-client-id>"
+client_secret = "<aad-client-secret>"
+tenant_id = "<aad-tenant-id>"
+
+
+token_url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/token"
+headers = {"Content-Type": "application/x-www-form-urlencoded"}
+data = {
+    "grant_type": "client_credentials",
+    "client_id": client_id,
+    "client_secret": client_secret,
+    "scope": "https://graph.microsoft.com/.default"
+}
+response = requests.post(token_url, headers=headers, data=data)
+access_token = response.json()["access_token"]
+
+
+zip_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/zipball/{branch_name}"
+headers = {"Authorization": f"Bearer {access_token}"}
+response = requests.get(zip_url, headers=headers)
+
+
+with open("/dbfs/tmp/github_repo.zip", "wb") as zip_file:
+    zip_file.write(response.content)
+
+
+
+// ============================================
