@@ -20,7 +20,7 @@ Git.cloneRepository.setURI(gitUrl).setDirectory(destinationPath).call()
 val fileToDownload = "path/to/file"
 val filePath = "/mnt/<mount-point>/<file-name>"
 Git.cloneRepository.setURI(gitUrl).call().getRepository.copyTo(filePath, fileToDownload)
-// ===========================================
+#===========================================
 
 
 import requests
@@ -57,4 +57,5 @@ with open("/dbfs/tmp/github_repo.zip", "wb") as zip_file:
 
 
 
-// ============================================
+#============================================
+curl -H "Authorization: token YOUR_TOKEN" -H "Accept: application/vnd.github.v3+json" -LJO "https://api.github.com/repos/<OWNER>/<REPO>/zipball/BRANCH_NAME"
