@@ -31,3 +31,7 @@ Click on "User Settings" in the dropdown menu.
 In the "Access Tokens" tab, click "Generate New Token."
 Enter a name for the token and set the expiration if needed.
 Click "Generate."
+
+my_variable=$(databricks notebooks run --notebook-path "<notebook-path>" --json "{\"run_my_code\": true}" | jq -r '.metadata.userExtraPythonResults.my_variable')
+echo $my_variable
+
