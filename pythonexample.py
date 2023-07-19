@@ -24,3 +24,10 @@ for cluster in clusters:
 
 # Print the Cluster ID
 print("Cluster ID:", cluster_id)
+
+Go to the Databricks workspace.
+Click on the "User Settings" icon (usually a user profile picture) in the top-right corner.
+Click on "User Settings" in the dropdown menu.
+In the "Access Tokens" tab, click "Generate New Token."
+Enter a name for the token and set the expiration if needed.
+Click "Generate."
