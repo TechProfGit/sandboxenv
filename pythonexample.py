@@ -35,3 +35,20 @@ Click "Generate."
 my_variable=$(databricks notebooks run --notebook-path "<notebook-path>" --json "{\"run_my_code\": true}" | jq -r '.metadata.userExtraPythonResults.my_variable')
 echo $my_variable
 
+
+
+
+# Replace the placeholders with your actual values
+storage_account_name="<storage_account_name>"
+storage_account_key="<storage_account_key>"
+container_name="<container_name>"
+folder_name="<folder_name>"
+
+az storage blob list --account-name $storage_account_name --account-key $storage_account_key --container-name $container_name --prefix $folder_name/ --output tsv --query '[].{Name:name}' |
+while read -r blob_name
+do
+    destination_path="${blob_name//$folder_name\//}" # Remove folder prefix from the blob name to get the destination path
+    echo "Downloading: $blob_name to $destination_path"
+    az storage blob download --account-name $storage_account_name --account-key $storage_account_key --container-name $container_name --name "$blob_name" --file "$destination_path"
+done
+
