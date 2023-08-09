@@ -49,8 +49,8 @@ def replace_url_in_file(input_file, output_file, search_pattern, replace_string)
 
 input_file_path = 'input.txt'
 output_file_path = 'output.txt'
-search_pattern = r'https://mywebsite\.com/.+?\.jpeg'
-replace_string = r'https://images.com\g<0>'
+search_pattern = r'https://www\.mywebsite\.com/.+?/\w+\.(jpg|jpeg|png)'
+replace_string = r'https://www.abcd.com/img/\w+\g<1>'
 
 replace_url_in_file(input_file_path, output_file_path, search_pattern, replace_string)
 
