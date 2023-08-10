@@ -17,3 +17,36 @@ replace_string = r'https://www.abcd.com/img/\w+\g<1>'
 replace_url_in_file(input_file_path, output_file_path, search_pattern, replace_string)
 
 print("URLs replaced successfully.")
+
+
+#======================
+import os
+
+def get_file_list(directory):
+    file_list = []
+    for filename in os.listdir(directory):
+        if os.path.isfile(os.path.join(directory, filename)):
+            file_list.append(filename)
+    return file_list
+
+directory_path = '/path/to/your/directory'
+file_list = get_file_list(directory_path)
+
+print("List of files in the directory:")
+for filename in file_list:
+    print(filename)
+
+#======================================
+import os
+
+def rename_file(old_name, new_name):
+    try:
+        os.rename(old_name, new_name)
+        print(f"File '{old_name}' renamed to '{new_name}' successfully.")
+    except OSError as e:
+        print(f"Error renaming the file: {e}")
+
+old_file_name = 'old_file.txt'
+new_file_name = 'new_file.txt'
+
+rename_file(old_file_name, new_file_name)
