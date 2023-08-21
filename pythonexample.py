@@ -1,18 +1,16 @@
-#Read a first directory in a folder
-import os
+# List the contents of a DBFS directory
+directory_path = "/dbfs/mnt/my-mount-point"
 
-def get_first_folder(directory):
-    for item in os.listdir(directory):
-        item_path = os.path.join(directory, item)
-        if os.path.isdir(item_path):
-            return item
-    return None  # No folder found
+contents = dbutils.fs.ls(directory_path)
 
-directory_path = '/path/to/your/directory'
+# Find the first folder
+first_folder_path = None
+for item in contents:
+    if item.isDir():
+        first_folder_path = item.path
+        break
 
-first_folder = get_first_folder(directory_path)
-
-if first_folder:
-    print("First folder name:", first_folder)
+if first_folder_path:
+    print("First folder path:", first_folder_path)
 else:
     print("No folders found in the directory.")
