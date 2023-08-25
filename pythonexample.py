@@ -1,16 +1,14 @@
-# List the contents of a DBFS directory
-directory_path = "/dbfs/mnt/my-mount-point"
+import json
 
-contents = dbutils.fs.ls(directory_path)
+# Open the JSON file
+with open("data.json", "r") as file:
+    data = json.load(file)
 
-# Find the first folder
-first_folder_path = None
-for item in contents:
-    if item.isDir():
-        first_folder_path = item.path
-        break
+# Define the properties you want to retrieve
+desired_properties = ["name", "age"]
 
-if first_folder_path:
-    print("First folder path:", first_folder_path)
-else:
-    print("No folders found in the directory.")
+# Iterate through each object in the list
+for item in data:
+    # Create a new dictionary containing only the desired properties
+    selected_properties = {prop: item[prop] for prop in desired_properties}
+    print(selected_properties)
