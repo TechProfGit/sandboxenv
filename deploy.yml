@@ -1,0 +1,43 @@
+name: ci 
+on:
+  push:
+    branches:
+      - master
+      - main
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - run: pip install mkdocs-material
+      - run: pip install pillow cairosvg
+      - run: mkdocs gh-deploy --force          
+      - uses: google-github-actions/setup-gcloud@v0
+      - name: Install dependencies
+        run: |
+          gcloud version
+          gcloud auth activate-service-account --key-file=ser_acc.json
+          gcloud config set project githubdeploy
+      - name: Set up Cloud SDK
+        run: |
+          mkdir deploy_directory
+          mkdir deploy_directory/site
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages 
+          path: deploy_directory/site 
+          fetch-depth: 1 
+      - name: List files in the checked-out branch
+        run: |
+          cp app.yaml deploy_directory/
+          # cp main.py deploy_directory/
+          cp requirements.txt deploy_directory/
+          cd deploy_directory
+          ls -R
+          gcloud app deploy
